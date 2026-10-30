@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Электронный английский язык</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f0f4f0">
+    <script>
+        // тема применяется до первой отрисовки, чтобы не было «вспышки» светлой темы
+        (function () {
+            var theme = 'light';
+            try {
+                var saved = localStorage.getItem('electronic-english-theme');
+                if (saved === 'dark' || saved === 'light') {
+                    theme = saved;
+                } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    theme = 'dark';
+                }
+            } catch (e) { /* ignore */ }
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+            <img src="logo.png" alt="Logo" width="40" height="40">
+            <div class="logo">Electronic English</div>
+        </div>
+        <div class="header-right">
+            <div class="nav">
+                <a href="#video" class="nav-link">Video</a>
+                <a href="#test1" class="nav-link">Test №1</a>
+                <a href="#test2" class="nav-link">Test №2</a>
+            </div>
+            <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Включить тёмную тему" title="Тёмная тема">
+                <span class="theme-icon" aria-hidden="true">🌙</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Панель ученика -->
+    <section class="student-panel">
+        <div class="student-panel-inner">
+            <label class="student-name-label" for="studentName">Ученик:</label>
+            <input id="studentName" class="student-name-input" type="text" maxlength="40" placeholder="Введите имя" autocomplete="name" spellcheck="false">
+            <span class="student-greeting" id="studentGreeting" aria-live="polite"></span>
+            <button class="reset-progress-btn" id="resetProgress" type="button" title="Удалить имя, ответы и результаты тестов">Сбросить прогресс</button>
+        </div>
+    </section>
+
+    <!-- Video секция -->
+    <section id="video" class="video-section">
+        <video width="640" height="360" controls>
+            <source src="видео.mp4" type="video/mp4">
+        </video>
+    </section>
+
+    <!-- Test №1 (ЧЕКБОКСЫ - МНОЖЕСТВЕННЫЙ ВЫБОР) -->
+    <section id="test1" class="test-section">
+        <h2>Тест №1: A diagram with various components is presented. Read the text carefully and select the elements that are missing in the diagram.</h2>
+        
+        <div class="test-question" data-question="1">
+            <p>Вопрос 1</p>
+            <img src="схема1.png" alt="Схема 1" width="200">
+            <p>The circuit consists of two parallel branches. The current from the upper branch flows into the left node, goes through a coil, and then in series through a resistor. The current in the lower branch flows through two resistors and then through a capacitor. At the right node, the currents merge into a single common current, which exits through the right terminal.</p>
+            <p class="question-text"><strong>What element(s) is missing from the diagram?</strong></p>
+            <div class="checkbox-options">
+                <label class="checkbox-label">
+                    <input type="checkbox" name="q1" value="inductor" data-correct="true">
+                    <img src="катушка.png" width="60">
+                    <span>Coil (катушка)</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="q1" value="resistor">
+                    <img src="резистор.png" width="60">
+                    <span>Resistor (резистор)</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="q1" value="capacitor">
+                    <img src="неполярный-конденсатор.png" width="60">
+                    <span>Capacitor (конденсатор)</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="q1" value="diode">
+                    <img src="диод.png" width="60">
+                    <span>Diode (диод)</span>
+                </label>
+            </div>
+            <p class="result-message"></p>
+        </div>
+
+        <div class="test-question" data-question="2">
+            <p>Вопрос 2</p>
+            <img src="схема-2.png" alt="Схема 2" width="200">
+            <p>The total current from the DC source splits: current I1 flows through the first resistor, while current I2 passes through the second resistor. Both currents then merge and return to the negative terminal. The diagram shows a parallel connection.</p>
+            <p class="question-text"><strong>What element(s) is missing from the diagram?</strong></p>
+            <div class="checkbox-options">
+                <label class="checkbox-label">
+                    <input type="checkbox" name="q2" value="battery" data-correct="true">
+                    <img src="гальванический-элемент_-батарея.png" width="60">
+                    <span>Battery (батарея)</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="q2" value="resistor" data-correct="true">
+                    <img src="резистор.png" width="60">
+                    <span>Resistor (резистор)</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="q2" value="lamp">
+                    <img src="сигнальная-лампа.png" width="60">
+                    <span>Lamp (лампа)</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="q2" value="switch">
+                    <img src="двухпозиционный-переключатель.png" width="60">
+                    <span>Switch (переключатель)</span>
+                </label>
+            </div>
+            <p class="result-message"></p>
+        </div>
+
+        <div class="test-question" data-question="3">
+            <p>Вопрос 3</p>
+            <img src="схема-3.png" alt="Схема 3" width="200">
+            <p>A battery of galvanic cells is used to provide the required voltage. The current flows to a two-position (on/off) switch, then through a current-limiting resistor to the LED, which emits light. Finally, the current returns to the negative terminal.</p>
+            <p class="question-text"><strong>What element(s) is missing from the diagram?</strong></p>
+            <div class="checkbox-options">
+                <label class="checkbox-label">
+                    <input type="checkbox" name="q3" value="battery">
+                    <img src="гальванический-элемент_-батарея.png" width="60">
+                    <span>Battery (батарея)</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="q3" value="switch" data-correct="true">
+                    <img src="двухпозиционный-переключатель.png" width="60">
+                    <span>Switch (переключатель)</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="q3" value="resistor">
+                    <img src="резистор.png" width="60">
+                    <span>Resistor (резистор)</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="q3" value="led" data-correct="true">
+                    <img src="светодиод.png" width="60">
+                    <span>LED (светодиод)</span>
+                </label>
+            </div>
+            <p class="result-message"></p>
+        </div>
+
+        <div class="test-question" data-question="4">
+            <p>Вопрос 4</p>
+            <img src="схема 4.png" alt="Схема 4" width="200">
+            <p>Current flows from the positive terminal of the battery to a two-position (on/off)  switch, then to a signal lamp, and finally returns to the negative terminal.</p>
+            <p class="question-text"><strong>What element(s) is missing from the diagram?</strong></p>
+            <div class="checkbox-options">
+                <label class="checkbox-label">
+                    <input type="checkbox" name="q4" value="battery">
+                    <img src="гальванический-элемент_-батарея.png" width="60">
+                    <span>Battery (батарея)</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="q4" value="switch" data-correct="true">
+                    <img src="двухпозиционный-переключатель.png" width="60">
+                    <span>Switch (переключатель)</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="q4" value="lamp" data-correct="true">
+                    <img src="сигнальная-лампа.png" width="60">
+                    <span>Lamp (лампа)</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="q4" value="resistor">
+                    <img src="резистор.png" width="60">
+                    <span>Resistor (резистор)</span>
+                </label>
+            </div>
+            <p class="result-message"></p>
+        </div>
+
+        <div class="test-question" data-question="5">
+            <p>Вопрос 5</p>
+            <img src="схема 5.png" alt="Схема 5" width="200">
+            <p>From the galvanic cell, the current flows to the first signal lamp, then through the second lamp, and returns to the negative terminal.</p>
+            <p class="question-text"><strong>What element(s) is missing from the diagram?</strong></p>
+            <div class="checkbox-options">
+                <label class="checkbox-label">
+                    <input type="checkbox" name="q5" value="battery">
+                    <img src="гальванический-элемент_-батарея.png" width="60">
+                    <span>Battery (батарея)</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="q5" value="lamp" data-correct="true">
+                    <img src="сигнальная-лампа.png" width="60">
+                    <span>Lamp (лампа)</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="q5" value="resistor">
+                    <img src="резистор.png" width="60">
+                    <span>Resistor (резистор)</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="q5" value="switch">
+                    <img src="двухпозиционный-переключатель.png" width="60">
+                    <span>Switch (переключатель)</span>
+                </label>
+            </div>
+            <p class="result-message"></p>
+        </div>
+
+        <div class="test-question" data-question="6">
+            <p>Вопрос 6</p>
+            <img src="схема 6.jpg" alt="Схема 6" width="200">
+            <p>From the battery, the current flows to the   signal lamp, then through a two-position (on/off) switch, and returns to the negative terminal.</p>
+            <p class="question-text"><strong>What element(s) is missing from the diagram?</strong></p>
+            <div class="checkbox-options">
+                <label class="checkbox-label">
+                    <input type="checkbox" name="q6" value="battery">
+                    <img src="гальванический-элемент_-батарея.png" width="60">
+                    <span>Battery (батарея)</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="q6" value="switch" data-correct="true">
+                    <img src="двухпозиционный-переключатель.png" width="60">
+                    <span>Switch (переключатель)</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="q6" value="lamp">
+                    <img src="сигнальная-лампа.png" width="60">
+                    <span>Lamp (лампа)</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="q6" value="resistor">
+                    <img src="резистор.png" width="60">
+                    <span>Resistor (резистор)</span>
+                </label>
+            </div>
+            <p class="result-message"></p>
+        </div>
+
+        <div class="test-result-container" id="test1-result"></div>
+        <div class="submit-area">
+            <button class="submit-test-btn" data-test="test1" type="button" disabled>Проверить все ответы Test №1</button>
+            <p class="submit-hint">Ответьте на все вопросы, чтобы проверить результат.</p>
+        </div>
+    </section>
+
+    <!-- Test №2 (КНОПКИ ВЫБОРА) -->
+<section id="test2" class="test-section">
+    <h2>Тест №2: Look at the image and select the correct name of the element(s).</h2>
+
+    <!-- Вопрос 1 -->
+    <div class="test-question" data-question="1">
+        <p>Вопрос 1</p>
+        <img src="неполярный-конденсатор.png" alt="Capacitor" width="150">
+        <p>Choose the correct answer:</p>
+        <div class="button-options">
+            <button class="choice-btn" data-correct="true">Capacitor (unpolarized)</button>
+            <button class="choice-btn" data-correct="false">Capacitor (polarized)</button>
+            <button class="choice-btn" data-correct="false">Resistor</button>
+            <button class="choice-btn" data-correct="false">Variable resistor</button>
+        </div>
+        <p class="result-message"></p>
+    </div>
+
+    <!-- Вопрос 2 -->
+    <div class="test-question" data-question="2">
+        <p>Вопрос 2</p>
+        <img src="катушка.png" alt="Coil" width="150">
+        <p>Choose the correct answer:</p>
+        <div class="button-options">
+            <button class="choice-btn" data-correct="false">Motor</button>
+            <button class="choice-btn" data-correct="false">On-off switch</button>
+            <button class="choice-btn" data-correct="true">Coil</button>
+            <button class="choice-btn" data-correct="false">2-way switch</button>
+        </div>
+        <p class="result-message"></p>
+    </div>
+
+    <!-- Вопрос 3 -->
+    <div class="test-question" data-question="3">
+        <p>Вопрос 3</p>
+        <img src="батарея.png" alt="Battery" width="150">
+        <p>Choose the correct answer:</p>
+        <div class="button-options">
+            <button class="choice-btn" data-correct="false">Cell</button>
+            <button class="choice-btn" data-correct="true">Battery</button>
+            <button class="choice-btn" data-correct="false">Wires joined</button>
+            <button class="choice-btn" data-correct="false">Transformer</button>
+        </div>
+        <p class="result-message"></p>
+    </div>
+
+    <!-- Вопрос 4 -->
+    <div class="test-question" data-question="4">
+        <p>Вопрос 4</p>
+        <img src="двухпозиционный-переключатель.png" alt="Switch" width="150">
+        <p>Choose the correct answer:</p>
+        <div class="button-options">
+            <button class="choice-btn" data-correct="false">Wires joined</button>
+            <button class="choice-btn" data-correct="false">2-way switch</button>
+            <button class="choice-btn" data-correct="false">Resistor</button>
+            <button class="choice-btn" data-correct="true">On-off switch</button>
+        </div>
+        <p class="result-message"></p>
+    </div>
+
+    <!-- Вопрос 5 -->
+    <div class="test-question" data-question="5">
+        <p>Вопрос 5</p>
+        <img src="сигнальная-лампа.png" alt="Lamp" width="150">
+        <p>Choose the correct answer:</p>
+        <div class="button-options">
+            <button class="choice-btn" data-correct="true">Lamp (indicator)</button>
+            <button class="choice-btn" data-correct="false">Battery</button>
+            <button class="choice-btn" data-correct="false">Cell</button>
+            <button class="choice-btn" data-correct="false">Lamp (lighting)</button>
+        </div>
+        <p class="result-message"></p>
+    </div>
+
+    <!-- Вопрос 6 -->
+    <div class="test-question" data-question="6">
+        <p>Вопрос 6</p>
+        <img src="резистор.png" alt="Resistor" width="150">
+        <p>Choose the correct answer:</p>
+        <div class="button-options">
+            <button class="choice-btn" data-correct="false">Fuse</button>
+            <button class="choice-btn" data-correct="true">Resistor</button>
+            <button class="choice-btn" data-correct="false">DC supply</button>
+            <button class="choice-btn" data-correct="false">Variable resistor</button>
+        </div>
+        <p class="result-message"></p>
+    </div>
+
+    <!-- Вопрос 7 -->
+    <div class="test-question" data-question="7">
+        <p>Вопрос 7</p>
+        <img src="трансформатор.png" alt="Transformer" width="150">
+        <p>Choose the correct answer:</p>
+        <div class="button-options">
+            <button class="choice-btn" data-correct="false">Variable resistor</button>
+            <button class="choice-btn" data-correct="false">Wires joined</button>
+            <button class="choice-btn" data-correct="false">Cell</button>
+            <button class="choice-btn" data-correct="true">Transformer</button>
+        </div>
+        <p class="result-message"></p>
+    </div>
+
+    <!-- Вопрос 8 -->
+    <div class="test-question" data-question="8">
+        <p>Вопрос 8</p>
+        <img src="источник постоянного питания.png" alt="DC Supply" width="150">
+        <p>Choose the correct answer:</p>
+        <div class="button-options">
+            <button class="choice-btn" data-correct="false">Diode</button>
+            <button class="choice-btn" data-correct="false">Lamp (lighting)</button>
+            <button class="choice-btn" data-correct="false">AC supply</button>
+            <button class="choice-btn" data-correct="true">DC supply</button>
+        </div>
+        <p class="result-message"></p>
+    </div>
+
+    <!-- Вопрос 9 -->
+    <div class="test-question" data-question="9">
+        <p>Вопрос 9</p>
+        <img src="диод.png" alt="Diode" width="150">
+        <p>Choose the correct answer:</p>
+        <div class="button-options">
+            <button class="choice-btn" data-correct="false">Fuse</button>
+            <button class="choice-btn" data-correct="false">Lamp (lighting)</button>
+            <button class="choice-btn" data-correct="true">Diode</button>
+            <button class="choice-btn" data-correct="false">Cell</button>
+        </div>
+        <p class="result-message"></p>
+    </div>
+
+    <!-- Вопрос 10 -->
+    <div class="test-question" data-question="10">
+        <p>Вопрос 10</p>
+        <img src="переключатель на 2 напрвления.png" alt="2-way switch" width="150">
+        <p>Choose the correct answer:</p>
+        <div class="button-options">
+            <button class="choice-btn" data-correct="true">2-way switch</button>
+            <button class="choice-btn" data-correct="false">Transformer</button>
+            <button class="choice-btn" data-correct="false">On-off switch</button>
+            <button class="choice-btn" data-correct="false">DC supply</button>
+        </div>
+        <p class="result-message"></p>
+    </div>
+
+    <!-- Вопрос 11 -->
+    <div class="test-question" data-question="11">
+        <p>Вопрос 11</p>
+        <img src="мотор.png" alt="Motor" width="150">
+        <p>Choose the correct answer:</p>
+        <div class="button-options">
+            <button class="choice-btn" data-correct="false">LED</button>
+            <button class="choice-btn" data-correct="true">Motor</button>
+            <button class="choice-btn" data-correct="false">Resistor</button>
+            <button class="choice-btn" data-correct="false">AC supply</button>
+        </div>
+        <p class="result-message"></p>
+    </div>
+
+    <!-- Вопрос 12 -->
+    <div class="test-question" data-question="12">
+        <p>Вопрос 12</p>
+        <img src="полярный конденсатор.png" alt="Polarized capacitor" width="150">
+        <p>Choose the correct answer:</p>
+        <div class="button-options">
+            <button class="choice-btn" data-correct="false">Capacitor (unpolarized)</button>
+            <button class="choice-btn" data-correct="false">2-way switch</button>
+            <button class="choice-btn" data-correct="false">Wires joined</button>
+            <button class="choice-btn" data-correct="true">Capacitor (polarized)</button>
+        </div>
+        <p class="result-message"></p>
+    </div>
+
+    <!-- Вопрос 13 -->
+    <div class="test-question" data-question="13">
+        <p>Вопрос 13</p>
+        <img src="светодиод.png" alt="LED" width="150">
+        <p>Choose the correct answer:</p>
+        <div class="button-options">
+            <button class="choice-btn" data-correct="false">Variable resistor</button>
+            <button class="choice-btn" data-correct="false">Diode</button>
+            <button class="choice-btn" data-correct="true">LED (light Emitting Diode)</button>
+            <button class="choice-btn" data-correct="false">Capacitor (polarized)</button>
+        </div>
+        <p class="result-message"></p>
+    </div>
+
+    <!-- Вопрос 14 -->
+    <div class="test-question" data-question="14">
+        <p>Вопрос 14</p>
+        <img src="плавкий предохранитель.png" alt="Fuse" width="150">
+        <p>Choose the correct answer:</p>
+        <div class="button-options">
+            <button class="choice-btn" data-correct="false">Resistor</button>
+            <button class="choice-btn" data-correct="true">Fuse</button>
+            <button class="choice-btn" data-correct="false">Motor</button>
+            <button class="choice-btn" data-correct="false">Diode</button>
+        </div>
+        <p class="result-message"></p>
+    </div>
+
+    <!-- Вопрос 15 -->
+    <div class="test-question" data-question="15">
+        <p>Вопрос 15</p>
+        <img src="конденсатор переменной емкости.png" alt="Variable capacitor" width="150">
+        <p>Choose the correct answer:</p>
+        <div class="button-options">
+            <button class="choice-btn" data-correct="false">Variable resistor</button>
+            <button class="choice-btn" data-correct="true">Variable capacitor</button>
+            <button class="choice-btn" data-correct="false">Battery</button>
+            <button class="choice-btn" data-correct="false">Capacitor (unpolarized)</button>
+        </div>
+        <p class="result-message"></p>
+    </div>
+
+    <!-- Вопрос 16 -->
+    <div class="test-question" data-question="16">
+        <p>Вопрос 16</p>
+        <img src="переменный резистор.png" alt="Variable resistor" width="150">
+        <p>Choose the correct answer:</p>
+        <div class="button-options">
+            <button class="choice-btn" data-correct="false">Resistor</button>
+            <button class="choice-btn" data-correct="false">Variable capacitor</button>
+            <button class="choice-btn" data-correct="true">Variable resistor</button>
+            <button class="choice-btn" data-correct="false">Capacitor (unpolarized)</button>
+        </div>
+        <p class="result-message"></p>
+    </div>
+
+    <!-- Вопрос 17 -->
+    <div class="test-question" data-question="17">
+        <p>Вопрос 17</p>
+        <img src="провода соединены.png" alt="Wires joined" width="150">
+        <p>Choose the correct answer:</p>
+        <div class="button-options">
+            <button class="choice-btn" data-correct="false">Transformer</button>
+            <button class="choice-btn" data-correct="false">2-way switch</button>
+            <button class="choice-btn" data-correct="false">DC supply</button>
+            <button class="choice-btn" data-correct="true">wires joined</button>
+        </div>
+        <p class="result-message"></p>
+    </div>
+
+    <!-- Вопрос 18 -->
+    <div class="test-question" data-question="18">
+        <p>Вопрос 18</p>
+        <img src="провода не соединены.png" alt="Wires not joined" width="150">
+        <p>Choose the correct answer:</p>
+        <div class="button-options">
+            <button class="choice-btn" data-correct="true">wires not joined</button>
+            <button class="choice-btn" data-correct="false">Cell</button>
+            <button class="choice-btn" data-correct="false">wires joined</button>
+            <button class="choice-btn" data-correct="false">DC supply</button>
+        </div>
+        <p class="result-message"></p>
+    </div>
+
+    <!-- Вопрос 19 -->
+    <div class="test-question" data-question="19">
+        <p>Вопрос 19</p>
+        <img src="гальванический-элемент_-батарея.png" alt="Cell" width="150">
+        <p>Choose the correct answer:</p>
+        <div class="button-options">
+            <button class="choice-btn" data-correct="false">On-off switch</button>
+            <button class="choice-btn" data-correct="false">AC supply</button>
+            <button class="choice-btn" data-correct="true">Cell</button>
+            <button class="choice-btn" data-correct="false">Wires joined</button>
+        </div>
+        <p class="result-message"></p>
+    </div>
+
+    <!-- Вопрос 20 -->
+    <div class="test-question" data-question="20">
+        <p>Вопрос 20</p>
+        <img src="источник переменного тока.png" alt="AC supply" width="150">
+        <p>Choose the correct answer:</p>
+        <div class="button-options">
+            <button class="choice-btn" data-correct="false">Capacitor (unpolarized)</button>
+            <button class="choice-btn" data-correct="true">AC supply</button>
+            <button class="choice-btn" data-correct="false">Motor</button>
+            <button class="choice-btn" data-correct="false">Transformer</button>
+        </div>
+        <p class="result-message"></p>
+    </div>
+
+    <!-- Вопрос 21 -->
+    <div class="test-question" data-question="21">
+        <p>Вопрос 21</p>
+        <img src="лампа освещения.png" alt="Lamp lighting" width="150">
+        <p>Choose the correct answer:</p>
+        <div class="button-options">
+            <button class="choice-btn" data-correct="true">Lamp (lighting)</button>
+            <button class="choice-btn" data-correct="false">LED (light Emitting Diode)</button>
+            <button class="choice-btn" data-correct="false">Lamp (indicator)</button>
+            <button class="choice-btn" data-correct="false">Fuse</button>
+        </div>
+        <p class="result-message"></p>
+    </div>
+
+    <div class="test-result-container" id="test2-result"></div>
+    <div class="submit-area">
+        <button class="submit-test-btn" data-test="test2" type="button" disabled>Проверить все ответы Test №2</button>
+        <p class="submit-hint">Ответьте на все вопросы, чтобы проверить результат.</p>
+    </div>
+</section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Electronic English</h3>
+                <p>Изучай электроный английский язык!</p>
+            </div>
+           
+            <div class="footer-section">
+                <h3>Полезные ссылки</h3>
+                <ul>
+                    <li><a href="#video">Видеоурок</a></li>
+                    <li><a href="#test1">Тест №1</a></li>
+                    <li><a href="#test2">Тест №2</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Образовательный проект</h3>
+                <p>© 2026 Electronic English</p>
+                <p>Все права защищены</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Нижняя панель прогресса (видна всегда) -->
+    <div class="progress-dock" id="progressDock" role="region" aria-label="Прогресс прохождения тестов">
+        <div class="progress-dock-inner">
+            <div class="dock-tests">
+                <button class="dock-chip is-active" type="button" data-test="test1" aria-pressed="true">
+                    <span class="dock-chip-name">Тест №1</span>
+                    <span class="dock-chip-count"><b class="dock-chip-answered">0</b>/<b class="dock-chip-total">6</b></span>
+                </button>
+                <button class="dock-chip" type="button" data-test="test2" aria-pressed="false">
+                    <span class="dock-chip-name">Тест №2</span>
+                    <span class="dock-chip-count"><b class="dock-chip-answered">0</b>/<b class="dock-chip-total">21</b></span>
+                </button>
+            </div>
+            <div class="dock-main">
+                <div class="dock-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Прогресс активного теста">
+                    <div class="dock-fill"></div>
+                </div>
+                <div class="dock-info">
+                    <span class="dock-count">Отвечено <b class="dock-answered">0</b> из <b class="dock-total">6</b></span>
+                    <span class="dock-remaining">осталось 6</span>
+                </div>
+            </div>
+            <div class="dock-side">
+                <span class="dock-timer" title="Затраченное время">⏱ <span class="dock-timer-value">00:00</span></span>
+                <button class="dock-next" type="button">К следующему ↓</button>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+    <script src="main.js"></script>
+</body>
+</html>
